@@ -5,12 +5,10 @@ import { CustomerCreditTransferInitiation } from '../interfaces/iPain001Transact
 import { healthcheck, monitorTransaction } from './misc';
 
 describe('test misc functions', () => {
-  
   let axioPostSpy: jest.SpyInstance;
   beforeEach(() => {
-    axioPostSpy = jest.spyOn(axios, "post").mockImplementation();
+    axioPostSpy = jest.spyOn(axios, 'post').mockImplementation();
   });
-
 
   test('should healtcheck return UP', () => {
     const ctx = {
@@ -40,7 +38,7 @@ describe('test misc functions', () => {
     const ctxTest = await monitorTransaction(ctx as Context);
     const expected = JSON.stringify(
       new CustomerCreditTransferInitiation(mlTran),
-    ); 
+    );
 
     expect(JSON.stringify(ctxTest.body)).toMatch(expected);
     axioPostSpy.mockRestore();

@@ -17,15 +17,15 @@ log4js.configure({
   appenders: {
     logstash: {
       type: '@log4js-node/logstash-http',
-      url: `http://${configuration.logstashHost}:${configuration.logstashPort}/_bulk`, 
-      application: 'logstash-log4js', 
-      logType: 'application', 
-      logChannel: configuration.functionName
-    }
+      url: `http://${configuration.logstashHost}:${configuration.logstashPort}/_bulk`,
+      application: 'logstash-log4js',
+      logType: 'application',
+      logChannel: configuration.functionName,
+    },
   },
   categories: {
-    default: { appenders: ['logstash'], level: 'info' }
-  }
+    default: { appenders: ['logstash'], level: 'info' },
+  },
 });
 
 const logger = log4js.getLogger();
@@ -48,7 +48,8 @@ export abstract class LoggerService {
   static log(message: string, serviceOperation?: string): Promise<void> | any {
     this.isDebugging &&
       logger.info(
-        `[${LoggerService.timeStamp()}][${LoggerService.source}${serviceOperation ? ' - ' + serviceOperation : ''
+        `[${LoggerService.timeStamp()}][${LoggerService.source}${
+          serviceOperation ? ' - ' + serviceOperation : ''
         }][INFO] - ${message}`,
       );
   }
@@ -56,7 +57,8 @@ export abstract class LoggerService {
   static warn(message: string, serviceOperation?: string): Promise<void> | any {
     this.isDebugging &&
       logger.warn(
-        `[${LoggerService.timeStamp()}][${LoggerService.source}${serviceOperation ? ' - ' + serviceOperation : ''
+        `[${LoggerService.timeStamp()}][${LoggerService.source}${
+          serviceOperation ? ' - ' + serviceOperation : ''
         }][WARN] - ${message}`,
       );
   }
@@ -72,9 +74,10 @@ export abstract class LoggerService {
       errMessage += `\r\n${innerError.message}`;
     }
 
-    //this.isDebugging &&
+    // this.isDebugging &&
     logger.error(
-      `[${LoggerService.timeStamp()}][${LoggerService.source}${serviceOperation ? ' - ' + serviceOperation : ''
+      `[${LoggerService.timeStamp()}][${LoggerService.source}${
+        serviceOperation ? ' - ' + serviceOperation : ''
       }][ERROR] - ${errMessage}`,
     );
   }
