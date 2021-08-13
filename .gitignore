@@ -1,2 +1,5 @@
 template
 templates
+node_modules
+build
+.vscode
