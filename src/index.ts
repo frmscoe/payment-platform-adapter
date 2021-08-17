@@ -19,7 +19,9 @@ const app = new App();
 
 export function handleError(err: Error, ctx: Context): void {
   if (ctx == null) {
-    LoggerService.error(`Unhandled exception occured; event: 'error'; Error: ${err}`);
+    LoggerService.error(
+      `Unhandled exception occured; event: 'error'; Error: ${err}`,
+    );
   }
 }
 
@@ -28,7 +30,9 @@ export function terminate(signal: NodeJS.Signals): void {
     log4js.shutdown();
     app.terminate();
   } finally {
-    LoggerService.warn(`Signal: ${signal}; event: 'terminate'; 'App is terminated'`);
+    LoggerService.warn(
+      `Signal: ${signal}; event: 'terminate'; 'App is terminated'`,
+    );
     process.kill(process.pid, signal);
   }
 }
@@ -41,7 +45,9 @@ if (
   Object.values(require.cache).filter(async (m) => m?.children.includes(module))
 ) {
   const server = app.listen(configuration.port, () => {
-    LoggerService.log(`event: 'execute'; API server listening on PORT ${configuration.port}`);
+    LoggerService.log(
+      `event: 'execute'; API server listening on PORT ${configuration.port}`,
+    );
   });
   server.on('error', handleError);
 
