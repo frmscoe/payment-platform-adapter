@@ -4,8 +4,5 @@ const router = new Router();
 
 router.get('/', miscController.healthcheck);
 router.get('/health', miscController.healthcheck);
-// Change this to your liking
-router.post('/execute', miscController.monitorTransaction);
-router.post('/transfer', miscController.transfer);
 
 export default router;

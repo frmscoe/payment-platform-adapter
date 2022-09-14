@@ -1,13 +1,14 @@
 {
   "name": "payment-platform-adapter",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "payment-platform-adapter",
   "main": "build/index.js",
   "scripts": {
     "dev": "nodemon",
     "build": "tsc",
     "start": "node build/index.js",
-    "cleanup": "rm -rf build template jest.config.js jest.config.js.map node_modules",
+    "cleanup": "rm -rf build template jest.config.js jest.config.js.map",
+    "cleanupAll": "rm -rf build template jest.config.js jest.config.js.map node_modules",
     "fix": "yarn fix:prettier && yarn fix:eslint",
     "fix:eslint": "eslint --fix \"**/*.ts\"",
     "fix:prettier": "prettier --write \"**/*.ts\"",
@@ -31,17 +32,19 @@
     {
       "name": "Joey Goksu",
       "email": "me@joeygoksu.com"
+    },
+    {
+      "name": "Len Bekker",
+      "email": "Len.Bekker@sybrin.com"
     }
   ],
   "license": "ISC",
   "dependencies": {
-    "@log4js-node/logstash-http": "^1.1.0",
-    "@log4js-node/logstashudp": "^1.2.1",
     "@types/uuid": "^8.3.1",
     "arangojs": "^7.5.0",
     "axios": "^0.21.1",
     "dotenv": "8.2.0",
-    "elastic-apm-node": "^3.14.0",
+    "kafkajs": "^1.15.0",
     "koa": "^2.13.1",
     "koa-bodyparser": "^4.3.0",
     "koa-router": "^10.0.0",

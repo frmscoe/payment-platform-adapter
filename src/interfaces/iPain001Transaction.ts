@@ -268,6 +268,13 @@ class CategoryPurpose {
   Proprietary = ''; // scenario
 }
 
+class OtherIdentification {
+  Identification = ''; // partyIdentifier
+  SchemeName: SchemeName = new SchemeName();
+  // PrivateIdentification: PrivateIdentification = new PrivateIdentification();
+  ContactDetails: ContactDetails = new ContactDetails();
+}
+
 class PrivateIdentification {
   DateAndPlaceOfBirth: DateAndPlaceOfBirth = new DateAndPlaceOfBirth();
   Other: OtherIdentification = new OtherIdentification();
@@ -280,13 +287,6 @@ class RegulatoryReporting {
 
 class PaymentTypeInformation {
   CategoryPurpose: CategoryPurpose = new CategoryPurpose();
-}
-
-class OtherIdentification {
-  Identification = ''; // partyIdentifier
-  SchemeName: SchemeName = new SchemeName();
-  // PrivateIdentification: PrivateIdentification = new PrivateIdentification();
-  ContactDetails: ContactDetails = new ContactDetails();
 }
 
 class Identification {
@@ -319,7 +319,8 @@ class ActiveOrHistoricCurrencyAndAmount {
 }
 
 class Amount {
-  InstructedAmount: ActiveOrHistoricCurrencyAndAmount = new ActiveOrHistoricCurrencyAndAmount();
+  InstructedAmount: ActiveOrHistoricCurrencyAndAmount =
+    new ActiveOrHistoricCurrencyAndAmount();
 
   EquivalentAmount: EquivalentAmount = new EquivalentAmount();
 }
@@ -335,11 +336,13 @@ class ClearingSystemMemberIdentification {
 }
 
 class FinancialInstitutionIdentification {
-  ClearingSystemMemberIdentification: ClearingSystemMemberIdentification = new ClearingSystemMemberIdentification();
+  ClearingSystemMemberIdentification: ClearingSystemMemberIdentification =
+    new ClearingSystemMemberIdentification();
 }
 
 class Agent {
-  FinancialInstitutionIdentification: FinancialInstitutionIdentification = new FinancialInstitutionIdentification();
+  FinancialInstitutionIdentification: FinancialInstitutionIdentification =
+    new FinancialInstitutionIdentification();
 }
 
 class SupplementaryData {
@@ -351,7 +354,9 @@ class StructuredRemittanceInformation {
 }
 
 class RemittanceInformation {
-  Structured: StructuredRemittanceInformation = new StructuredRemittanceInformation();
+  Structured: StructuredRemittanceInformation =
+    new StructuredRemittanceInformation();
+
   Unstructured = '';
 }
 
@@ -390,7 +395,9 @@ class DateAndDateTime2Choice {
 
 class PaymentInformation {
   PaymentInformationIdentification = ''; // quoteId
-  CreditTransferTransactionInformation: CreditTransferTransactionInformation = new CreditTransferTransactionInformation();
+  CreditTransferTransactionInformation: CreditTransferTransactionInformation =
+    new CreditTransferTransactionInformation();
+
   PaymentMethod = '';
   DebtorAccount: Account = new Account();
   DebtorAgent: Agent = new Agent();
@@ -431,8 +438,10 @@ export class CustomerCreditTransferInitiation {
     // PAYEE
     if (transaction.payee) {
       if (transaction.payee.partyIdInfo.partyIdType === 'MSISDN')
-        this.PaymentInformation.CreditTransferTransactionInformation.CreditorAccount.Identification.ContactDetails.MobileNumber = transaction.payee.partyIdInfo.partyIdentifier.toMobileNumber();
-      this.PaymentInformation.CreditTransferTransactionInformation.Creditor.Identification.ContactDetails.MobileNumber = transaction.payee.partyIdInfo.partyIdentifier.toMobileNumber();
+        this.PaymentInformation.CreditTransferTransactionInformation.CreditorAccount.Identification.ContactDetails.MobileNumber =
+          transaction.payee.partyIdInfo.partyIdentifier.toMobileNumber();
+      this.PaymentInformation.CreditTransferTransactionInformation.Creditor.Identification.ContactDetails.MobileNumber =
+        transaction.payee.partyIdInfo.partyIdentifier.toMobileNumber();
       this.PaymentInformation.CreditTransferTransactionInformation.CreditorAccount.Identification.Other.Identification =
         transaction.payee.partyIdInfo.partyIdentifier;
       // transaction.payee.partyIdInfo.partySubIdOrType
@@ -452,20 +461,21 @@ export class CustomerCreditTransferInitiation {
           ? ' ' + transaction.payee.personalInfo.complexName.lastName
           : ''
       }`;
-      this.PaymentInformation.CreditTransferTransactionInformation.Creditor.Identification.PrivateIdentification.DateAndPlaceOfBirth.Birthdate = new Date(
-        transaction.payee.personalInfo.dateOfBirth,
-      )
-        .toISOString()
-        .split('T')[0];
+      this.PaymentInformation.CreditTransferTransactionInformation.Creditor.Identification.PrivateIdentification.DateAndPlaceOfBirth.Birthdate =
+        new Date(transaction.payee.personalInfo.dateOfBirth)
+          .toISOString()
+          .split('T')[0];
 
       if (transaction.payee.partyIdInfo.partyIdType === 'PERSONAL_ID') {
         this.PaymentInformation.CreditTransferTransactionInformation.Creditor.Identification.Other.SchemeName.Proprietary =
           transaction.payee.partyIdInfo.partySubIdOrType;
-        this.PaymentInformation.CreditTransferTransactionInformation.CreditorAccount.Identification.Other.SchemeName.Proprietary = this.PaymentInformation.CreditTransferTransactionInformation.Creditor.Identification.Other.SchemeName.Proprietary;
+        this.PaymentInformation.CreditTransferTransactionInformation.CreditorAccount.Identification.Other.SchemeName.Proprietary =
+          this.PaymentInformation.CreditTransferTransactionInformation.Creditor.Identification.Other.SchemeName.Proprietary;
       } else {
         this.PaymentInformation.CreditTransferTransactionInformation.Creditor.Identification.Other.SchemeName.Proprietary =
           transaction.payee.partyIdInfo.partyIdType;
-        this.PaymentInformation.CreditTransferTransactionInformation.CreditorAccount.Identification.Other.SchemeName.Proprietary = this.PaymentInformation.CreditTransferTransactionInformation.Creditor.Identification.Other.SchemeName.Proprietary;
+        this.PaymentInformation.CreditTransferTransactionInformation.CreditorAccount.Identification.Other.SchemeName.Proprietary =
+          this.PaymentInformation.CreditTransferTransactionInformation.Creditor.Identification.Other.SchemeName.Proprietary;
       }
 
       this.PaymentInformation.CreditTransferTransactionInformation.SupplementaryData[
@@ -487,7 +497,8 @@ export class CustomerCreditTransferInitiation {
       this.PaymentInformation.DebtorAccount.Identification.Other.SchemeName.Proprietary =
         transaction.payer.partyIdInfo.partyIdType;
       if (transaction.payer.partyIdInfo.partyIdType === 'MSISDN')
-        this.PaymentInformation.Debtor.Identification.ContactDetails.MobileNumber = transaction.payer.partyIdInfo.partyIdentifier.toMobileNumber();
+        this.PaymentInformation.Debtor.Identification.ContactDetails.MobileNumber =
+          transaction.payer.partyIdInfo.partyIdentifier.toMobileNumber();
       this.PaymentInformation.DebtorAccount.Identification.Other.Identification =
         transaction.payer.partyIdInfo.partyIdentifier;
       // transaction.payee.partyIdInfo.partySubIdOrType
@@ -508,11 +519,10 @@ export class CustomerCreditTransferInitiation {
           ? ' ' + transaction.payer.personalInfo.complexName.lastName
           : ''
       }`;
-      this.PaymentInformation.Debtor.Identification.PrivateIdentification.DateAndPlaceOfBirth.Birthdate = new Date(
-        transaction.payer.personalInfo.dateOfBirth,
-      )
-        .toISOString()
-        .split('T')[0];
+      this.PaymentInformation.Debtor.Identification.PrivateIdentification.DateAndPlaceOfBirth.Birthdate =
+        new Date(transaction.payer.personalInfo.dateOfBirth)
+          .toISOString()
+          .split('T')[0];
       if (transaction.payer.partyIdInfo.partyIdType === 'PERSONAL_ID')
         this.PaymentInformation.Debtor.Identification.PrivateIdentification.Other.SchemeName.Proprietary =
           transaction.payer.partyIdInfo.partySubIdOrType;
@@ -538,15 +548,16 @@ export class CustomerCreditTransferInitiation {
       this.PaymentInformation.CreditTransferTransactionInformation.Amount.EquivalentAmount.CurrencyOfTransfer =
         transaction.amount.currency;
       if (transaction.amountType === 'SEND' || !transaction.fees) {
-        this.PaymentInformation.CreditTransferTransactionInformation.Amount.InstructedAmount.Amount = Number.parseFloat(
-          transaction.amount.amount,
-        );
-        this.PaymentInformation.CreditTransferTransactionInformation.Amount.EquivalentAmount.Amount = this.PaymentInformation.CreditTransferTransactionInformation.Amount.InstructedAmount.Amount;
+        this.PaymentInformation.CreditTransferTransactionInformation.Amount.InstructedAmount.Amount =
+          Number.parseFloat(transaction.amount.amount);
+        this.PaymentInformation.CreditTransferTransactionInformation.Amount.EquivalentAmount.Amount =
+          this.PaymentInformation.CreditTransferTransactionInformation.Amount.InstructedAmount.Amount;
       } else {
         this.PaymentInformation.CreditTransferTransactionInformation.Amount.InstructedAmount.Amount =
           Number.parseFloat(transaction.amount.amount) +
           Number.parseFloat(transaction.fees.amount);
-        this.PaymentInformation.CreditTransferTransactionInformation.Amount.EquivalentAmount.Amount = this.PaymentInformation.CreditTransferTransactionInformation.Amount.InstructedAmount.Amount;
+        this.PaymentInformation.CreditTransferTransactionInformation.Amount.EquivalentAmount.Amount =
+          this.PaymentInformation.CreditTransferTransactionInformation.Amount.InstructedAmount.Amount;
       }
     }
 
@@ -568,17 +579,27 @@ export class CustomerCreditTransferInitiation {
         transaction.transactionType.scenario;
     // transaction.transactionType.scenario.subScenario
     if (transaction.transactionType.initiator === 'PAYER') {
-      this.GroupHeader.InitiatingParty.Identification.ContactDetails.MobileNumber = this.PaymentInformation.Debtor.Identification.ContactDetails.MobileNumber;
-      this.GroupHeader.InitiatingParty.Name = this.PaymentInformation.Debtor.Name;
-      this.GroupHeader.InitiatingParty.Identification.PrivateIdentification.DateAndPlaceOfBirth.Birthdate = this.PaymentInformation.Debtor.Identification.PrivateIdentification.DateAndPlaceOfBirth.Birthdate;
-      this.GroupHeader.InitiatingParty.Identification.PrivateIdentification.Other.Identification = this.PaymentInformation.Debtor.Identification.PrivateIdentification.Other.Identification;
-      this.GroupHeader.InitiatingParty.Identification.PrivateIdentification.Other.SchemeName.Proprietary = this.PaymentInformation.Debtor.Identification.PrivateIdentification.Other.SchemeName.Proprietary;
+      this.GroupHeader.InitiatingParty.Identification.ContactDetails.MobileNumber =
+        this.PaymentInformation.Debtor.Identification.ContactDetails.MobileNumber;
+      this.GroupHeader.InitiatingParty.Name =
+        this.PaymentInformation.Debtor.Name;
+      this.GroupHeader.InitiatingParty.Identification.PrivateIdentification.DateAndPlaceOfBirth.Birthdate =
+        this.PaymentInformation.Debtor.Identification.PrivateIdentification.DateAndPlaceOfBirth.Birthdate;
+      this.GroupHeader.InitiatingParty.Identification.PrivateIdentification.Other.Identification =
+        this.PaymentInformation.Debtor.Identification.PrivateIdentification.Other.Identification;
+      this.GroupHeader.InitiatingParty.Identification.PrivateIdentification.Other.SchemeName.Proprietary =
+        this.PaymentInformation.Debtor.Identification.PrivateIdentification.Other.SchemeName.Proprietary;
     } else {
-      this.GroupHeader.InitiatingParty.Identification.ContactDetails.MobileNumber = this.PaymentInformation.CreditTransferTransactionInformation.CreditorAccount.Identification.ContactDetails.MobileNumber;
-      this.GroupHeader.InitiatingParty.Name = this.PaymentInformation.CreditTransferTransactionInformation.Creditor.Name;
-      this.GroupHeader.InitiatingParty.Identification.PrivateIdentification.DateAndPlaceOfBirth.Birthdate = this.PaymentInformation.CreditTransferTransactionInformation.Creditor.Identification.PrivateIdentification.DateAndPlaceOfBirth.Birthdate;
-      this.GroupHeader.InitiatingParty.Identification.PrivateIdentification.Other.Identification = this.PaymentInformation.CreditTransferTransactionInformation.Creditor.Identification.PrivateIdentification.Other.Identification;
-      this.GroupHeader.InitiatingParty.Identification.PrivateIdentification.Other.SchemeName.Proprietary = this.PaymentInformation.CreditTransferTransactionInformation.Creditor.Identification.PrivateIdentification.Other.SchemeName.Proprietary;
+      this.GroupHeader.InitiatingParty.Identification.ContactDetails.MobileNumber =
+        this.PaymentInformation.CreditTransferTransactionInformation.CreditorAccount.Identification.ContactDetails.MobileNumber;
+      this.GroupHeader.InitiatingParty.Name =
+        this.PaymentInformation.CreditTransferTransactionInformation.Creditor.Name;
+      this.GroupHeader.InitiatingParty.Identification.PrivateIdentification.DateAndPlaceOfBirth.Birthdate =
+        this.PaymentInformation.CreditTransferTransactionInformation.Creditor.Identification.PrivateIdentification.DateAndPlaceOfBirth.Birthdate;
+      this.GroupHeader.InitiatingParty.Identification.PrivateIdentification.Other.Identification =
+        this.PaymentInformation.CreditTransferTransactionInformation.Creditor.Identification.PrivateIdentification.Other.Identification;
+      this.GroupHeader.InitiatingParty.Identification.PrivateIdentification.Other.SchemeName.Proprietary =
+        this.PaymentInformation.CreditTransferTransactionInformation.Creditor.Identification.PrivateIdentification.Other.SchemeName.Proprietary;
     }
     this.SupplementaryData['transactionType.initiatorType'] =
       transaction.transactionType.initiatorType;

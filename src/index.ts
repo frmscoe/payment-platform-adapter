@@ -1,19 +1,11 @@
-/* eslint-disable no-console */
-import { configuration } from './config';
+/* eslint-disable no-console, @typescript-eslint/no-explicit-any */
 import { Context } from 'koa';
-import App from './app';
-import apm from 'elastic-apm-node';
-import { LoggerService } from './helpers';
 import log4js from 'log4js';
-
-if (configuration.apmLogging) {
-  apm.start({
-    serviceName: configuration.apmServiceName,
-    secretToken: configuration.apmSecretToken,
-    serverUrl: configuration.apmURL,
-    usePathAsTransactionName: true,
-  });
-}
+import App from './app';
+import { configuration } from './config';
+import { LoggerService } from './helpers';
+import { EventsService } from './helpers/events';
+import { redisClient } from './redis';
 
 const app = new App();
 
@@ -61,6 +53,18 @@ if (
   signals.forEach((signal) => {
     process.once(signal, () => terminate(signal));
   });
+
+  // Start events service
+  const eventService = new EventsService();
+  const initialized = eventService.initialize(redisClient);
+
+  if (initialized) {
+    eventService.startConsumer((args: any) => {
+      eventService.messageHandler(args);
+    });
+  } else {
+    LoggerService.log("event: 'error'; Could not start up Events Service");
+  }
 }
 
 export default app;
