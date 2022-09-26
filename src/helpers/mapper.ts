@@ -706,7 +706,7 @@ const eventToPacs002 = (
       },
       TxInfAndSts: {
         OrgnlInstrId: pain001.CstmrCdtTrfInitn.PmtInf.PmtInfId,
-        OrgnlEndToEndId: transactionId,
+        OrgnlEndToEndId: transactionId.replace('-', ''),
         TxSts: TxSts,
         ChrgsInf: [],
         AccptncDtTm: data.completedTimestamp,
