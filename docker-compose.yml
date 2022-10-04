@@ -8,7 +8,9 @@ services:
     container_name: ppa
     restart: unless-stopped
     env_file: .env
-  redis:
+    depends_on:
+        - redis
+  ppa-redis:
     image: redis
     container_name: ppa-redis
     ports:

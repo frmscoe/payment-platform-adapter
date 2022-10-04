@@ -232,7 +232,9 @@ export class EventsService {
         .slice(msg.content.url.indexOf('quotes/') + 7)
         .replace('/', '');
 
-      const parentQuote = await this.getKey(`[pain001]${quoteId}`);
+      const parentQuote = await this.getKey(
+        `[pain001]${quoteId.replace('-', '')}`,
+      );
       if (!parentQuote) {
         LoggerService.log(
           `error: 'processEvent'; [pain001]${quoteId} not found`,

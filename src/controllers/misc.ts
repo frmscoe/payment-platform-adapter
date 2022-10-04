@@ -20,7 +20,7 @@ const sendPacs002 = async (payload: Pacs002): Promise<any> => {
       payload,
     );
     LoggerService.log(
-      `Response from TMS Api: ${JSON.stringify(
+      `pacs002 response from TMS Api: ${JSON.stringify(
         tmsReply.data?.message ? tmsReply.data.message : tmsReply.data,
         null,
         2,
@@ -28,7 +28,9 @@ const sendPacs002 = async (payload: Pacs002): Promise<any> => {
     );
     return tmsReply;
   } catch (err: any) {
-    LoggerService.error(err);
+    LoggerService.error(
+      `sending pacs002 error occured; event: 'error'; Error: ${err}`,
+    );
     return err;
   }
 };
@@ -44,7 +46,7 @@ const sendPacs008 = async (payload: Pacs008): Promise<any> => {
       payload,
     );
     LoggerService.log(
-      `Response from TMS Api: ${
+      `pacs008 response from TMS Api: ${
         tmsReply.data?.message
           ? tmsReply.data.message
           : JSON.stringify(tmsReply.data, null, 2)
@@ -52,7 +54,9 @@ const sendPacs008 = async (payload: Pacs008): Promise<any> => {
     );
     return tmsReply;
   } catch (err: any) {
-    LoggerService.error(err);
+    LoggerService.error(
+      `sending pacs008 error occured; event: 'error'; Error: ${err}`,
+    );
     return err;
   }
 };
@@ -69,7 +73,7 @@ const sendPain001 = async (payload: Pain001): Promise<any> => {
       payload,
     );
     LoggerService.log(
-      `Response from TMS Api: ${
+      `pain001 response from TMS Api: ${
         tmsReply.data?.message
           ? tmsReply.data.message
           : JSON.stringify(tmsReply.data, null, 2)
@@ -77,7 +81,9 @@ const sendPain001 = async (payload: Pain001): Promise<any> => {
     );
     return tmsReply;
   } catch (err: any) {
-    LoggerService.error(err);
+    LoggerService.error(
+      `sending pain001 error occured; event: 'error'; Error: ${err}`,
+    );
     return err;
   }
 };
@@ -94,7 +100,7 @@ const sendPain013 = async (payload: Pain013): Promise<any> => {
       payload,
     );
     LoggerService.log(
-      `Response from TMS Api: ${
+      `pain013 response from TMS Api: ${
         tmsReply.data?.message
           ? tmsReply.data.message
           : JSON.stringify(tmsReply.data, null, 2)
@@ -102,7 +108,9 @@ const sendPain013 = async (payload: Pain013): Promise<any> => {
     );
     return tmsReply;
   } catch (err: any) {
-    LoggerService.error(err);
+    LoggerService.error(
+      `sending pain013 error occured; event: 'error'; Error: ${err}`,
+    );
     return err;
   }
 };
