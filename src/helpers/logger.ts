@@ -1,54 +1,36 @@
-/* eslint-disable @typescript-eslint/no-explicit-any, no-logger */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { configuration } from '../config';
 import log4js from 'log4js';
 
-/*
- Sample logstash config:
-   udp {
-    codec => json
-    port => 10001
-    queue_size => 2
-    workers => 2
-    type => myAppType
-  }
-*/
-
+const layoutType = { type: 'pattern', pattern: '%[[%d]%]%m' }; // { type: 'colored' }
 log4js.configure({
-  appenders: {
-    logstash: {
-      type: '@log4js-node/logstash-http',
-      url: `http://${configuration.logstashHost}:${configuration.logstashPort}/_bulk`,
-      application: 'logstash-log4js',
-      logType: 'application',
-      logChannel: configuration.functionName,
-    },
-  },
-  categories: {
-    default: { appenders: ['logstash'], level: 'info' },
-  },
+  appenders: { console: { type: 'console', layout: layoutType } },
+  categories: { default: { appenders: ['console'], level: 'info' } },
 });
-
-const logger = log4js.getLogger();
 
 export abstract class LoggerService {
   private static source = configuration.functionName;
+  private static logger = log4js.getLogger();
   public static isDebugging = configuration.dev === 'dev';
+  public static internalTimestamps = layoutType.type !== 'pattern';
 
   private static timeStamp() {
+    if (!this.internalTimestamps) return '';
     const dateObj = new Date();
-
     let date = dateObj.toISOString();
     date = date.substring(0, date.indexOf('T'));
-
     const time = dateObj.toLocaleTimeString([], { hour12: false });
+    return `[${date} ${time}]`;
+  }
 
-    return `${date} ${time}`;
+  static getLogger() {
+    return this.logger;
   }
 
   static log(message: string, serviceOperation?: string): Promise<void> | any {
     this.isDebugging &&
-      logger.info(
-        `[${LoggerService.timeStamp()}][${LoggerService.source}${
+      this.logger.info(
+        `${LoggerService.timeStamp()}[${LoggerService.source}${
           serviceOperation ? ' - ' + serviceOperation : ''
         }][INFO] - ${message}`,
       );
@@ -56,8 +38,8 @@ export abstract class LoggerService {
 
   static warn(message: string, serviceOperation?: string): Promise<void> | any {
     this.isDebugging &&
-      logger.warn(
-        `[${LoggerService.timeStamp()}][${LoggerService.source}${
+      this.logger.warn(
+        `${LoggerService.timeStamp()}[${LoggerService.source}${
           serviceOperation ? ' - ' + serviceOperation : ''
         }][WARN] - ${message}`,
       );
@@ -74,9 +56,8 @@ export abstract class LoggerService {
       errMessage += `\r\n${innerError.message}`;
     }
 
-    // this.isDebugging &&
-    logger.error(
-      `[${LoggerService.timeStamp()}][${LoggerService.source}${
+    this.logger.error(
+      `${LoggerService.timeStamp()}[${LoggerService.source}${
         serviceOperation ? ' - ' + serviceOperation : ''
       }][ERROR] - ${errMessage}`,
     );

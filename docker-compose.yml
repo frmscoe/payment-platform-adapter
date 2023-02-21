@@ -1,6 +1,17 @@
-version: "2"
+version: "3"
 services:
-  redis:
+  payment-platform-adapter:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ppa
+    container_name: ppa
+    restart: unless-stopped
+    env_file: .env
+    depends_on:
+        - ppa-redis
+  ppa-redis:
     image: redis
+    container_name: ppa-redis
     ports:
       - "6379:6379"

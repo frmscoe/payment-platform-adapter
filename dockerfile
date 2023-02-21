@@ -11,7 +11,7 @@ RUN addgroup -S app && adduser -S -g app app
 
 RUN apk --no-cache add curl ca-certificates
 
-RUN apk add --no-cache -t build-dependencies git make gcc g++ python libtool autoconf automake yarn
+RUN apk add --no-cache -t build-dependencies git make gcc g++ python3 libtool autoconf automake yarn
 
 # Turn down the verbosity to default level.
 ENV NPM_CONFIG_LOGLEVEL warn
@@ -55,14 +55,20 @@ ENV prefix_logs="false"
 
 ENV FUNCTION_NAME=payment-platfrom-adapter
 ENV PORT=3000
-ENV TMS_ENDPOINT=http://gateway.frm:8080/function/off-transaction-monitoring-service.frm-meshed/execute
-ENV APM_LOGGING=true
-ENV APM_SERVICE_NAME=payment-platfrom-adapter
-ENV APM_URL=http://apm-server-apm-server.frm:8200
-ENV APM_SECRET_TOKEN=
+
+ENV TMS_ENDPOINT=TMS_ENDPOINT
+ENV TMS_PAIN001_ENDPOINT=TMS_PAIN001_ENDPOINT
+ENV TMS_PAIN013_ENDPOINT=TMS_PAIN013_ENDPOINT
+ENV TMS_PACS002_ENDPOINT=TMS_PACS002_ENDPOINT
+ENV TMS_PACS008_ENDPOINT=TMS_PACS008_ENDPOINT
+
+ENV KAFKA_URI=KAFKA_URI
+ENV KAFKA_CLIENT_ID=KAFKA_CLIENT_ID
+ENV KAFKA_CONSUMER_GROUP=KAFKA_CONSUMER_GROUP
+ENV KAFKA_TOPIC_TO_CONSUME=KAFKA_TOPIC_TO_CONSUME
+ENV REDIS_URL=REDIS_URL
+ENV REDIS_PORT=REDIS_PORT
 ENV NODE_ENV=dev
-ENV LOGSTASH_HOST=my-release-logstash.frm-meshed
-ENV LOGSTASH_PORT=8080
 
 HEALTHCHECK --interval=3s CMD [ -e /tmp/.lock ] || exit 1
 

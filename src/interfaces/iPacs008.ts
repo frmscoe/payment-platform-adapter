@@ -124,7 +124,8 @@ export class GroupHeader {
 
 export class FIToFICustomerCreditTransferV10 {
   GroupHeader = new GroupHeader();
-  CreditTransferTransactionInformation = new CreditTransferTransactionInformation();
+  CreditTransferTransactionInformation =
+    new CreditTransferTransactionInformation();
 
   constructor(transfer: iMLTransfer) {
     this.CreditTransferTransactionInformation.PaymentIdentification.EndToEndIdentification =
@@ -135,9 +136,8 @@ export class FIToFICustomerCreditTransferV10 {
       transfer.payeeFsp;
     this.CreditTransferTransactionInformation.DebtorAgent.FinancialInstitutionIdentification.ClearingSystemMemberIdentification.MemberIdentification =
       transfer.payerFsp;
-    this.CreditTransferTransactionInformation.InterbankSettlementAmount.Amount = Number.parseFloat(
-      transfer.amount.amount,
-    );
+    this.CreditTransferTransactionInformation.InterbankSettlementAmount.Amount =
+      Number.parseFloat(transfer.amount.amount);
     this.CreditTransferTransactionInformation.InterbankSettlementAmount.Currency =
       transfer.amount.currency;
     // info.ilpPacket missing
