@@ -15,7 +15,7 @@ const eventToPain001 = (data: any): Pain001 => {
     Id: {
       PrvtId: {
         DtAndPlcOfBirth: {
-          BirthDt: data.payer?.personalInfo?.dateOfBirth ?? '0000-01-01',
+          BirthDt: data.payer?.personalInfo?.dateOfBirth ?? '1970-01-01',
           CityOfBirth: 'Unknown',
         },
         Othr: {
@@ -85,7 +85,7 @@ const eventToPain001 = (data: any): Pain001 => {
           Id: {
             PrvtId: {
               DtAndPlcOfBirth: {
-                BirthDt: data.payer.personalInfo.dateOfBirth,
+                BirthDt: data?.payer?.personalInfo?.dateOfBirth ?? '1970-01-01',
                 CityOfBirth: 'Unknown',
               },
               Othr: {
@@ -288,7 +288,7 @@ const eventToPain013 = (
         },
       },
       PmtInf: {
-        PmtInfId: quoteId,
+        PmtInfId: quoteId.replace('-', ''),
         PmtMtd: pain001.CstmrCdtTrfInitn.PmtInf.PmtMtd,
         ReqdAdvcTp: {
           DbtAdvc: {
@@ -365,13 +365,13 @@ const eventToPain013 = (
           Amt: {
             InstdAmt: {
               Amt: {
-                Amt: data.transferAmount.amount,
+                Amt: Number(data.transferAmount.amount),
                 Ccy: data.transferAmount.currency,
               },
             },
             EqvtAmt: {
               Amt: {
-                Amt: data.transferAmount.amount,
+                Amt: Number(data.transferAmount.amount),
                 Ccy: data.transferAmount.currency,
               },
               CcyOfTrf:
@@ -446,19 +446,19 @@ const eventToPain013 = (
               Doc: {
                 PyeeRcvAmt: {
                   Amt: {
-                    Amt: data.transferAmount.amount,
+                    Amt: Number(data.transferAmount.amount),
                     Ccy: data.transferAmount.currency,
                   },
                 },
                 PyeeFinSvcsPrvdrFee: {
                   Amt: {
-                    Amt: data.payeeFspCommission?.amount,
+                    Amt: Number(data.payeeFspCommission?.amount),
                     Ccy: data.payeeFspCommission?.currency,
                   },
                 },
                 PyeeFinSvcsPrvdrComssn: {
                   Amt: {
-                    Amt: data.payeeFspFee?.amount,
+                    Amt: Number(data.payeeFspFee?.amount),
                     Ccy: data.payeeFspFee?.currency,
                   },
                 },
