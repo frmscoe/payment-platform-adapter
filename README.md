@@ -1,6 +1,6 @@
 # Payment Platform Adapter (PPA)
 
-![](./image-20210614-154949.png)
+![](./images/image-20210614-154949.png)
 
 The PPA is the first step between Mojaloop and Tazama. It accepts Mojaloop formatted messages and convert them to ISO formatted messages, then forwards that off to the TMS Api. The mapping for that can be found below.
 
@@ -20,13 +20,13 @@ Using the attached Postman collection, there are samples for the Quote and Trans
 
 [Mojaloop.PPA.postman_collection.json](./attachments/Mojaloop.PPA.postman_collection.json)
 
-![](./image-20210614-160206.png)
+![](./images/image-20210614-160206.png)
 
 ## Logging
 
 Logs can be found in Elastic. It makes use of the [@log4js-node/logstash-http](https://www.npmjs.com/package/@log4js-node/logstash-http) library to stream logs via http to our LogStash endpoint, showing in the [Elastic dashboard](http://51.132.53.172:5601/app/logs/stream?flyoutOptions=(flyoutId:!n,flyoutVisibility:hidden,surroundingLogsId:!n)&logPosition=(end:now,position:(tiebreaker:23,time:1623686351040),start:now-1d,streamLive:!f)&logFilter=(expression:payment-platfrom-adapter,kind:kuery)) .
 
-![](./PPA-Logs.png)
+![](./images/PPA-Logs.png)
 
 ## Features
 
