@@ -18,7 +18,7 @@ Mojaloop POST Transfer → ISO20022.pacs.008.001.10
 
 Using the attached Postman collection, there are samples for the Quote and Transfer calls, with Examples showing the expected output.
 
-[Mojaloop.PPA.postman_collection.json](./attachments/Mojaloop.PPA.postman_collection.json)
+[Mojaloop.PPA.postman_collection.json](./Mojaloop.PPA.postman_collection.json)
 
 ![](./images/image-20210614-160206.png)
 
