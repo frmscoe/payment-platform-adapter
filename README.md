@@ -4,7 +4,7 @@
 
 The PPA is the first step between Mojaloop and Tazama. It accepts Mojaloop formatted messages and convert them to ISO formatted messages, then forwards that off to the TMS Api. The mapping for that can be found below.
 
-[Mojaloop_to_ISO20022_mapping_V1.1_20210531.xlsx](./attachments/Mojaloop_to_ISO20022_mapping_V1.1_20210531.xlsx)
+[Mojaloop_to_ISO20022_mapping_V1.1_20210531.xlsx](./Mojaloop_to_ISO20022_mapping_V1.1_20210531.xlsx)
 
 Mojaloop POST Quote → ISO20022.pain.0-01.001.11
 
