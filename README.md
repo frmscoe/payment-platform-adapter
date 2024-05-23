@@ -1,3 +1,5 @@
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+
 # Payment Platform Adapter (PPA)
 
 ![](./images/image-20210614-154949.png)

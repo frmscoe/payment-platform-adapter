@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 FROM --platform=${TARGETPLATFORM:-linux/amd64} ghcr.io/openfaas/of-watchdog:0.8.4 as watchdog
 FROM --platform=${TARGETPLATFORM:-linux/amd64} node:14-alpine as ship
 

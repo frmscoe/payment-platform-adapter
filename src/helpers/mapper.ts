@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types */
 import { v4 } from 'uuid';
 import { Pacs002 } from '../interfaces/kafka/iPacs002Transfer';
