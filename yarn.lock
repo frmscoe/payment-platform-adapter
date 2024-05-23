@@ -536,22 +536,6 @@
     methods "^1.1.2"
     path-to-regexp "^6.1.0"
 
-"@log4js-node/logstash-http@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@log4js-node/logstash-http/-/logstash-http-1.1.0.tgz#27a8956ce1cb633e482bc4d227bda80a1d1828e3"
-  integrity sha512-kVl/g9CyNDN8wkH/cdGP3HbtdpTimL2WZbUm7WubNSVl7eS8QIDAqE1Clp4aaF1Y5oT7MUU4gUx8RzuP5xbuLg==
-  dependencies:
-    axios "^0.21.1"
-    debug "^3.1.0"
-
-"@log4js-node/logstashudp@^1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@log4js-node/logstashudp/-/logstashudp-1.2.1.tgz#7eeb41ee6ad77ec3a6d07bc8a163dacd81bc44af"
-  integrity sha512-+jh/9bY6NPYzT7Inv0nJuz9klq6Bk1kR/TrqKc8pcIFfjriEvjuH7jaSMf7Qs6Q1Yz6/3D9Fc0EQpUe5ycMeZg==
-  dependencies:
-    debug "^3.1.0"
-    lodash "^4.17.15"
-
 "@nodelib/fs.scandir@2.1.4":
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.scandir/-/fs.scandir-2.1.4.tgz#d4b3549a5db5de2683e0c1071ab4f140904bbf69"
@@ -1799,9 +1783,9 @@ cookie@^0.4.0:
   integrity sha512-ZwrFkGJxUR3EIoXtO+yVE69Eb7KlixbaeAWfBQB9vVsNn/o+Yw69gBWSSDK825hQNdN+wF8zELf3dFNl/kxkUA==
 
 cookiejar@^2.1.2:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/cookiejar/-/cookiejar-2.1.2.tgz#dd8a235530752f988f9a0844f3fc589e3111125c"
-  integrity sha512-Mw+adcfzPxcPeI+0WlvRrr/3lGVO0bD75SxX6811cxSh1Wbxx7xZBGK1eVtDf6si8rg2lhnUjsVLMFMfbRIuwA==
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/cookiejar/-/cookiejar-2.1.4.tgz#ee669c1fea2cf42dc31585469d193fef0d65771b"
+  integrity sha512-LDx6oHrK+PhzLKJU9j5S7/Y3jM/mUHvD/DeI1WQmJn652iPC5Y4TBzC9l+5OMOXlyTTA+SmVUPm0HQUwpD5Jqw==
 
 cookies@~0.8.0:
   version "0.8.0"
@@ -1927,7 +1911,7 @@ debug@^2.2.0, debug@^2.3.3, debug@^2.6.9:
   dependencies:
     ms "2.0.0"
 
-debug@^3.1.0, debug@^3.2.6:
+debug@^3.2.6:
   version "3.2.7"
   resolved "https://registry.yarnpkg.com/debug/-/debug-3.2.7.tgz#72580b7e9145fb39b6676f9c5e5fb100b934179a"
   integrity sha512-CFjzYYAi4ThfiQvizrFQevTTXHtnCqWfe7x1AhgEscTz6ZbLbfoLRLPugTQyBth6f8ZERVUSyWHFD/7Wu4t1XQ==
@@ -2153,7 +2137,7 @@ elastic-apm-http-client@^9.8.0:
     stream-chopper "^3.0.1"
     unicode-byte-truncate "^1.0.0"
 
-elastic-apm-node@*, elastic-apm-node@^3.14.0:
+elastic-apm-node@*:
   version "3.14.0"
   resolved "https://registry.yarnpkg.com/elastic-apm-node/-/elastic-apm-node-3.14.0.tgz#942d6e86bd9d3710f51f0e43f04965d63c3fefd3"
   integrity sha512-B7Xkz6UL44mm+2URdZy2yxpEB2C5CvZLOP3sGpf2h/hepXr4NgrVoRxGqO1F2b2wCB48smPv4a3v35b396VSwA==
@@ -4248,6 +4232,11 @@ jsprim@^1.2.2:
     extsprintf "1.3.0"
     json-schema "0.2.3"
     verror "1.10.0"
+
+kafkajs@^1.15.0:
+  version "1.16.0"
+  resolved "https://registry.yarnpkg.com/kafkajs/-/kafkajs-1.16.0.tgz#bfcc3ae2b69265ca8435b53a01ee9e8787b9fee5"
+  integrity sha512-+Rcfu2hyQ/jv5skqRY8xA7Ra+mmRkDAzCaLDYbkGtgsNKpzxPWiLbk8ub0dgr4EbWrN1Zb4BCXHUkD6+zYfdWg==
 
 keygrip@~1.1.0:
   version "1.1.0"
