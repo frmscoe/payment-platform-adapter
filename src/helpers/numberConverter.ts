@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 export function toMobileNumber(num: string): string {
   if (!num || num.length < 4) return num;
   let toReturn = num

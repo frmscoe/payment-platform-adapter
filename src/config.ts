@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 // config settings, env variables
 import path from 'path';

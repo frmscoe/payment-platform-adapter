@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 import { iMLQuote } from './iMLQuote';
 import { v4 } from 'uuid';
 

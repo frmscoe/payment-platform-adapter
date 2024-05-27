@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 export const quotesConstants = [
   'qs_quote_handleQuoteRequest',
   'qs_quote_forwardQuoteRequest',

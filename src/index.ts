@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 /* eslint-disable no-console, @typescript-eslint/no-explicit-any */
 import { Context } from 'koa';
 import log4js from 'log4js';

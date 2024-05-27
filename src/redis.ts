@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 import { configuration } from './config';
 import { LoggerService } from './helpers';
 import { createClient } from 'redis';
