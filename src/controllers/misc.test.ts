@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 import { Context } from 'koa';
 import { Pacs002 } from '../interfaces/kafka/iPacs002Transfer';
 import { Pacs008 } from '../interfaces/kafka/iPacs008Transfer';

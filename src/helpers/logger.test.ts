@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { configuration } from '../config';
 import { LoggerService } from './logger';
