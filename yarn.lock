@@ -4883,7 +4883,7 @@ minimatch@^3.0.4:
   dependencies:
     brace-expansion "^1.1.7"
 
-minimist@^1.1.1, minimist@^1.2.0, minimist@^1.2.5:
+minimist@^1.1.1, minimist@^1.2.0:
   version "1.2.8"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.8.tgz#c1a464e7693302e082a075cee0c057741ac4772c"
   integrity sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==
@@ -6545,9 +6545,9 @@ through@^2.3.8:
   integrity sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU=
 
 tmpl@1.0.x:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/tmpl/-/tmpl-1.0.4.tgz#23640dd7b42d00433911140820e5cf440e521dd1"
-  integrity sha1-I2QN17QtAEM5ERQIIOXPRA5SHdE=
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/tmpl/-/tmpl-1.0.5.tgz#8683e0b902bb9c20c4f726e3c0b69f36518c07cc"
+  integrity sha512-3f0uOEAQwIqGuWW2MVzYg8fV/QNnc/IpuJNG837rLuczAaLVHslWHZQj4IGiEl5Hs3kkbhwL9Ab7Hrsmuj+Smw==
 
 to-fast-properties@^2.0.0:
   version "2.0.0"
