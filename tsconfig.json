@@ -17,11 +17,12 @@
     "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */
   },
   "include": [
-    "src/**/*"
-  ],
+    "src/**/*" ],
   "exclude": [
     "node_modules",
+    "**/__tests__/**",
     "./src/**/*.spec.ts",
+    "./src/**/*.test.ts",
     "./src/jest.setup.redis-mock.js"
   ]
 }

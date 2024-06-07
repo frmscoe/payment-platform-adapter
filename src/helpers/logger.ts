@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-extraneous-class, @typescript-eslint/explicit-function-return-type */
 import { configuration } from '../config';
 import log4js from 'log4js';
 
@@ -11,8 +11,8 @@ log4js.configure({
 });
 
 export abstract class LoggerService {
-  private static source = configuration.functionName;
-  private static logger = log4js.getLogger();
+  private static readonly source = configuration.functionName;
+  private static readonly logger = log4js.getLogger();
   public static isDebugging = configuration.dev === 'dev';
   public static internalTimestamps = layoutType.type !== 'pattern';
 
@@ -32,26 +32,18 @@ export abstract class LoggerService {
   static log(message: string, serviceOperation?: string): Promise<void> | any {
     this.isDebugging &&
       this.logger.info(
-        `${LoggerService.timeStamp()}[${LoggerService.source}${
-          serviceOperation ? ' - ' + serviceOperation : ''
-        }][INFO] - ${message}`,
+        `${LoggerService.timeStamp()}[${LoggerService.source}${serviceOperation ? ' - ' + serviceOperation : ''}][INFO] - ${message}`,
       );
   }
 
   static warn(message: string, serviceOperation?: string): Promise<void> | any {
     this.isDebugging &&
       this.logger.warn(
-        `${LoggerService.timeStamp()}[${LoggerService.source}${
-          serviceOperation ? ' - ' + serviceOperation : ''
-        }][WARN] - ${message}`,
+        `${LoggerService.timeStamp()}[${LoggerService.source}${serviceOperation ? ' - ' + serviceOperation : ''}][WARN] - ${message}`,
       );
   }
 
-  static error(
-    message: string | Error,
-    innerError?: Error,
-    serviceOperation?: string,
-  ): Promise<void> | any {
+  static error(message: string | Error, innerError?: Error, serviceOperation?: string): Promise<void> | any {
     let errMessage = typeof message === 'string' ? message : message.stack;
 
     if (innerError) {
@@ -59,9 +51,7 @@ export abstract class LoggerService {
     }
 
     this.logger.error(
-      `${LoggerService.timeStamp()}[${LoggerService.source}${
-        serviceOperation ? ' - ' + serviceOperation : ''
-      }][ERROR] - ${errMessage}`,
+      `${LoggerService.timeStamp()}[${LoggerService.source}${serviceOperation ? ' - ' + serviceOperation : ''}][ERROR] - ${errMessage}`,
     );
   }
 }
