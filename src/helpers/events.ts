@@ -1,30 +1,22 @@
 // SPDX-License-Identifier: Apache-2.0
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-explicit-any*/
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+import type RedisClient from 'ioredis';
 import { Kafka } from 'kafkajs';
-import { Logger } from 'log4js';
-import { RedisClient } from 'redis';
 import { configuration } from '../config';
 import { eventType } from '../constants/event-types';
 import { quotesConstants } from '../constants/quote-constants';
 import { transferConstants } from '../constants/transfer-constants';
-import {
-  sendPacs002,
-  sendPacs008,
-  sendPain001,
-  sendPain013,
-} from '../controllers/misc';
-import { Pacs002 } from '../interfaces/kafka/iPacs002Transfer';
-import { Pacs008 } from '../interfaces/kafka/iPacs008Transfer';
-import { Pain001 } from '../interfaces/kafka/iPain001Quote';
-import { Pain013 } from '../interfaces/kafka/iPain013Quote';
+import { sendPacs002, sendPacs008, sendPain001, sendPain013 } from '../controllers/misc';
+import { type Pacs002 } from '../interfaces/kafka/iPacs002Transfer';
+import { type Pacs008 } from '../interfaces/kafka/iPacs008Transfer';
+import { type Pain001 } from '../interfaces/kafka/iPain001Quote';
+import { type Pain013 } from '../interfaces/kafka/iPain013Quote';
 import { LoggerService } from './logger';
-import {
-  eventToPacs002,
-  eventToPacs008,
-  eventToPain001,
-  eventToPain013,
-} from './mapper';
+import { eventToPacs002, eventToPacs008, eventToPain001, eventToPain013 } from './mapper';
 
 export class EventsService {
   initialized: boolean;
@@ -75,8 +67,7 @@ export class EventsService {
     await consumer.subscribe({ topic: listeningTopic, fromBeginning: false });
 
     await consumer.run({
-      eachMessage: async ({ topic, partition, message }: any) =>
-        messageHandleFunction({ topic, partition, message }),
+      eachMessage: async ({ topic, partition, message }: any) => messageHandleFunction({ topic, partition, message }),
     });
   }
 
@@ -118,10 +109,7 @@ export class EventsService {
             600,
           );
           (this.redis as RedisClient).set(
-            `[pain001]${
-              (record as Pain001).CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.PmtId
-                .EndToEndId
-            }`,
+            `[pain001]${(record as Pain001).CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.PmtId.EndToEndId}`,
             JSON.stringify(record).replace('undefined', ''),
             'EX',
             600,
@@ -135,18 +123,14 @@ export class EventsService {
           );
         } else if (TxTp === 'pacs.008.001.10') {
           (this.redis as RedisClient).set(
-            `[pacs008]${
-              (record as Pacs008).FIToFICstmrCdt.CdtTrfTxInf.PmtId.InstrId
-            }`,
+            `[pacs008]${(record as Pacs008).FIToFICstmrCdt.CdtTrfTxInf.PmtId.InstrId}`,
             JSON.stringify(record),
             'EX',
             600,
           );
         } else {
           (this.redis as RedisClient).set(
-            `[pacs002]${
-              (record as Pacs002).FIToFIPmtSts.TxInfAndSts.OrgnlInstrId
-            }`,
+            `[pacs002]${(record as Pacs002).FIToFIPmtSts.TxInfAndSts.OrgnlInstrId}`,
             JSON.stringify(record),
             'EX',
             600,
@@ -164,10 +148,10 @@ export class EventsService {
     const TxTp = record.TxTp;
 
     const options: any = {
-      'pain.001.001.11': "event: 'execute'; sendPain001",
-      'pain.013.001.09': "event: 'execute'; sendPain013",
-      'pacs.008.001.10': "event: 'execute'; sendPacs008",
-      'pacs.002.001.12': "event: 'execute'; sendPacs002",
+      'pain.001.001.11': 'event: "execute"; sendPain001',
+      'pain.013.001.09': 'event: "execute"; sendPain013',
+      'pacs.008.001.10': 'event: "execute"; sendPacs008',
+      'pacs.002.001.12': 'event: "execute"; sendPacs002',
     };
 
     LoggerService.log(`${options[TxTp]}`);
@@ -202,9 +186,7 @@ export class EventsService {
     return eventType.UNSUPPORTED;
   }
 
-  async processEvent(
-    msg: any,
-  ): Promise<Pain001 | Pain013 | Pacs008 | Pacs002 | null> {
+  async processEvent(msg: any): Promise<Pain001 | Pain013 | Pacs008 | Pacs002 | null> {
     // pain001 - ML Quote
     if (
       msg.metadata.trace.service === 'qs_quote_forwardQuoteRequest' &&
@@ -212,7 +194,7 @@ export class EventsService {
       msg.metadata.event.type !== 'trace' &&
       msg.metadata.trace.tags.transactionType === 'quote'
     ) {
-      LoggerService.log("event: 'transformation'; Event to pain001 - ML Quote");
+      LoggerService.log('event: "transformation"; Event to pain001 - ML Quote');
       const data = JSON.parse(msg.content.data);
 
       return eventToPain001(data);
@@ -225,22 +207,16 @@ export class EventsService {
       msg.metadata.trace.service === 'qs_quote_forwardQuoteUpdate' &&
       msg.metadata.event.action === 'egress'
     ) {
-      LoggerService.log(
-        "event: 'transformation'; Event to pain013 - ML Quote Reply",
-      );
+      LoggerService.log('event: "transformation"; Event to pain013 - ML Quote Reply');
       const data = JSON.parse(msg.content.data);
       const quoteId = msg.content.url
         .toLowerCase()
         .slice(msg.content.url.indexOf('quotes/') + 7)
         .replace('/', '');
 
-      const parentQuote = await this.getKey(
-        `[pain001]${quoteId.replace('-', '')}`,
-      );
+      const parentQuote = await this.getKey(`[pain001]${quoteId.replace('-', '')}`);
       if (!parentQuote) {
-        LoggerService.log(
-          `error: 'processEvent'; [pain001]${quoteId} not found`,
-        );
+        LoggerService.log(`error: 'processEvent'; [pain001]${quoteId} not found`);
         return null;
       }
 
@@ -256,17 +232,13 @@ export class EventsService {
       msg.metadata.event.action === 'egress' &&
       msg.metadata.trace.service === 'ml_notification_event'
     ) {
-      LoggerService.log(
-        "event: 'transformation'; Event to pacs008 - ML Transfer",
-      );
+      LoggerService.log('event: "transformation"; Event to pacs008 - ML Transfer');
       const data = JSON.parse(msg.content.data);
       const transactionId = data.transferId;
 
       const parentTransaction = await this.getKey(`[pain001]${transactionId}`);
       if (!parentTransaction) {
-        LoggerService.log(
-          `error: 'processEvent'; [pain001]${transactionId} not found`,
-        );
+        LoggerService.log(`error: 'processEvent'; [pain001]${transactionId} not found`);
         return null;
       }
 
@@ -283,9 +255,7 @@ export class EventsService {
       msg.metadata.trace.service === 'ml_notification_event' &&
       msg.content.data.includes('COMMITTED')
     ) {
-      LoggerService.log(
-        "event: 'transformation'; Event to pacs002 - ML Transfer Reply",
-      );
+      LoggerService.log('event: "transformation"; Event to pacs002 - ML Transfer Reply');
       const data = JSON.parse(msg.content.data);
       const transactionId = msg.content.url
         .toLowerCase()
@@ -294,9 +264,7 @@ export class EventsService {
 
       const parentTransaction = await this.getKey(`[pain001]${transactionId}`);
       if (!parentTransaction) {
-        LoggerService.log(
-          `error: 'processEvent'; [pain001]${transactionId} not found`,
-        );
+        LoggerService.log(`error: 'processEvent'; [pain001]${transactionId} not found`);
         return null;
       }
 
@@ -309,7 +277,7 @@ export class EventsService {
   }
 
   private async getKey(key: string) {
-    return new Promise((resolve) => {
+    return await new Promise((resolve) => {
       this.redis.get(key, function (err: any, resp: string) {
         if (err) {
           resolve(null);

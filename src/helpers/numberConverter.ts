@@ -2,11 +2,7 @@
 
 export function toMobileNumber(num: string): string {
   if (!num || num.length < 4) return num;
-  let toReturn = num
-    .replace('+', '')
-    .replace(' ', '')
-    .replace('(', '')
-    .replace(')', '');
+  let toReturn = num.replace('+', '').replace(' ', '').replace('(', '').replace(')', '');
   for (let index = 0; index < dialingCodes.length; index++) {
     const element = dialingCodes[index];
     if (toReturn.startsWith(element)) {
