@@ -1,4 +1,6 @@
-import { iMLTransfer } from './iMLTransfer';
+// SPDX-License-Identifier: Apache-2.0
+
+import { type iMLTransfer } from './iMLTransfer';
 
 export class InstructedAmount {
   Amount = 0.0; // ActiveCurrencyAndAmount -  = Number.parseFloat(transaction.fees.amount);
@@ -97,7 +99,7 @@ export class CreditTransferTransactionInformation {
   InterbankSettlementAmount = new InterbankSettlementAmount();
   InstructedAmount = new InstructedAmount();
   ChargeBearer = ''; // ChargeBearerTypeCode
-  ChargesInformation: Array<Charge> = new Array<Charge>();
+  ChargesInformation: Charge[] = new Array<Charge>();
   InitiatingParty = new Party();
   Debtor = new Party();
   DebtorAccount = new Party();
@@ -124,22 +126,17 @@ export class GroupHeader {
 
 export class FIToFICustomerCreditTransferV10 {
   GroupHeader = new GroupHeader();
-  CreditTransferTransactionInformation =
-    new CreditTransferTransactionInformation();
+  CreditTransferTransactionInformation = new CreditTransferTransactionInformation();
 
   constructor(transfer: iMLTransfer) {
-    this.CreditTransferTransactionInformation.PaymentIdentification.EndToEndIdentification =
-      transfer.transactionId;
-    this.CreditTransferTransactionInformation.PaymentIdentification.InstructionIdentification =
-      transfer.transferId;
+    this.CreditTransferTransactionInformation.PaymentIdentification.EndToEndIdentification = transfer.transactionId;
+    this.CreditTransferTransactionInformation.PaymentIdentification.InstructionIdentification = transfer.transferId;
     this.CreditTransferTransactionInformation.CreditorAgent.FinancialInstitutionIdentification.ClearingSystemMemberIdentification.MemberIdentification =
       transfer.payeeFsp;
     this.CreditTransferTransactionInformation.DebtorAgent.FinancialInstitutionIdentification.ClearingSystemMemberIdentification.MemberIdentification =
       transfer.payerFsp;
-    this.CreditTransferTransactionInformation.InterbankSettlementAmount.Amount =
-      Number.parseFloat(transfer.amount.amount);
-    this.CreditTransferTransactionInformation.InterbankSettlementAmount.Currency =
-      transfer.amount.currency;
+    this.CreditTransferTransactionInformation.InterbankSettlementAmount.Amount = Number.parseFloat(transfer.amount.amount);
+    this.CreditTransferTransactionInformation.InterbankSettlementAmount.Currency = transfer.amount.currency;
     // info.ilpPacket missing
     // info.expiration missing
   }

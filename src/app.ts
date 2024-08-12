@@ -1,11 +1,13 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+// SPDX-License-Identifier: Apache-2.0
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import Koa from 'koa';
 import bodyParser from 'koa-bodyparser';
 import * as swagger from 'swagger2';
 import { ui, validate } from 'swagger2-koa';
 import router from './routes';
-import { Server } from 'http';
+import { type Server } from 'http';
 
 class App extends Koa {
   public servers: Server[];

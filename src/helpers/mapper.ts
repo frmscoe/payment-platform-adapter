@@ -1,17 +1,17 @@
-/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types */
+// SPDX-License-Identifier: Apache-2.0
+/* eslint-disable @typescript-eslint/no-explicit-any*/
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { v4 } from 'uuid';
-import { Pacs002 } from '../interfaces/kafka/iPacs002Transfer';
-import { Pacs008 } from '../interfaces/kafka/iPacs008Transfer';
-import { Pain001 } from '../interfaces/kafka/iPain001Quote';
-import { Pain013 } from '../interfaces/kafka/iPain013Quote';
+import { type Pacs002 } from '../interfaces/kafka/iPacs002Transfer';
+import { type Pacs008 } from '../interfaces/kafka/iPacs008Transfer';
+import { type Pain001 } from '../interfaces/kafka/iPain001Quote';
+import { type Pain013 } from '../interfaces/kafka/iPain013Quote';
 import { toMobileNumber } from './numberConverter';
 
 const eventToPain001 = (data: any): Pain001 => {
   const dateNow = new Date().toISOString();
   const payerInitgPty = {
-    Nm: `${data.payer?.personalInfo?.complexName?.firstName ?? ''} ${
-      data.payer?.personalInfo?.complexName?.lastName ?? ''
-    }`,
+    Nm: `${data.payer?.personalInfo?.complexName?.firstName ?? ''} ${data.payer?.personalInfo?.complexName?.lastName ?? ''}`,
     Id: {
       PrvtId: {
         DtAndPlcOfBirth: {
@@ -32,9 +32,7 @@ const eventToPain001 = (data: any): Pain001 => {
   };
 
   const payeeInitgPty = {
-    Nm: `${data.payee?.personalInfo?.complexName?.firstName ?? ''} ${
-      data.payee?.personalInfo?.complexName?.lastName ?? ''
-    }`,
+    Nm: `${data.payee?.personalInfo?.complexName?.firstName ?? ''} ${data.payee?.personalInfo?.complexName?.lastName ?? ''}`,
     Id: {
       PrvtId: {
         DtAndPlcOfBirth: {
@@ -60,10 +58,7 @@ const eventToPain001 = (data: any): Pain001 => {
         MsgId: v4().replace('-', ''),
         CreDtTm: dateNow,
         NbOfTxs: 1,
-        InitgPty:
-          data.transactionType.initiator === 'PAYER'
-            ? payerInitgPty
-            : payeeInitgPty,
+        InitgPty: data.transactionType.initiator === 'PAYER' ? payerInitgPty : payeeInitgPty,
       },
       PmtInf: {
         PmtInfId: data.quoteId.replace('-', ''),
@@ -157,8 +152,7 @@ const eventToPain001 = (data: any): Pain001 => {
             Id: {
               PrvtId: {
                 DtAndPlcOfBirth: {
-                  BirthDt:
-                    data.payee?.personalInfo?.dateOfBirth ?? '1970-01-01',
+                  BirthDt: data.payee?.personalInfo?.dateOfBirth ?? '1970-01-01',
                   CityOfBirth: 'Unknown',
                 },
                 Othr: {
@@ -200,25 +194,16 @@ const eventToPain001 = (data: any): Pain001 => {
             Envlp: {
               Doc: {
                 Dbtr: {
-                  FrstNm:
-                    data.payer?.personalInfo?.complexName?.firstName ?? '',
-                  MddlNm:
-                    data.payer?.personalInfo?.complexName?.middleName ?? '',
+                  FrstNm: data.payer?.personalInfo?.complexName?.firstName ?? '',
+                  MddlNm: data.payer?.personalInfo?.complexName?.middleName ?? '',
                   LastNm: data.payer?.personalInfo?.complexName?.lastName ?? '',
-                  MrchntClssfctnCd:
-                    data.payer?.merchantClassificationCode || '',
+                  MrchntClssfctnCd: data.payer?.merchantClassificationCode || '',
                 },
                 Cdtr: {
-                  FrstNm:
-                    data.payee?.personalInfo?.complexName?.firstName ??
-                    'undefined',
-                  MddlNm:
-                    data.payee?.personalInfo?.complexName?.middleName ?? '',
-                  LastNm:
-                    data.payee?.personalInfo?.complexName?.lastName ??
-                    'undefined',
-                  MrchntClssfctnCd:
-                    data.payee?.merchantClassificationCode || '',
+                  FrstNm: data.payee?.personalInfo?.complexName?.firstName ?? 'undefined',
+                  MddlNm: data.payee?.personalInfo?.complexName?.middleName ?? '',
+                  LastNm: data.payee?.personalInfo?.complexName?.lastName ?? 'undefined',
+                  MrchntClssfctnCd: data.payee?.merchantClassificationCode || '',
                 },
                 DbtrFinSvcsPrvdrFees: {
                   Amt: 0,
@@ -247,11 +232,7 @@ const eventToPain001 = (data: any): Pain001 => {
   };
 };
 
-const eventToPain013 = (
-  data: any,
-  pain001: Pain001,
-  quoteId: string,
-): Pain013 => {
+const eventToPain013 = (data: any, pain001: Pain001, quoteId: string): Pain013 => {
   const dateNow = new Date().toISOString();
   return {
     TxTp: 'pain.013.001.09',
@@ -265,19 +246,13 @@ const eventToPain013 = (
           Id: {
             PrvtId: {
               DtAndPlcOfBirth: {
-                BirthDt:
-                  pain001.CstmrCdtTrfInitn.GrpHdr.InitgPty.Id.PrvtId
-                    .DtAndPlcOfBirth.BirthDt,
-                CityOfBirth:
-                  pain001.CstmrCdtTrfInitn.GrpHdr.InitgPty.Id.PrvtId
-                    .DtAndPlcOfBirth.CityOfBirth,
+                BirthDt: pain001.CstmrCdtTrfInitn.GrpHdr.InitgPty.Id.PrvtId.DtAndPlcOfBirth.BirthDt,
+                CityOfBirth: pain001.CstmrCdtTrfInitn.GrpHdr.InitgPty.Id.PrvtId.DtAndPlcOfBirth.CityOfBirth,
               },
               Othr: {
                 Id: pain001.CstmrCdtTrfInitn.GrpHdr.InitgPty.Id.PrvtId.Othr.Id,
                 SchmeNm: {
-                  Prtry:
-                    pain001.CstmrCdtTrfInitn.GrpHdr.InitgPty.Id.PrvtId.Othr
-                      .SchmeNm.Prtry,
+                  Prtry: pain001.CstmrCdtTrfInitn.GrpHdr.InitgPty.Id.PrvtId.Othr.SchmeNm.Prtry,
                 },
               },
             },
@@ -307,19 +282,13 @@ const eventToPain013 = (
           Id: {
             PrvtId: {
               DtAndPlcOfBirth: {
-                BirthDt:
-                  pain001.CstmrCdtTrfInitn.PmtInf.Dbtr.Id.PrvtId.DtAndPlcOfBirth
-                    .BirthDt,
-                CityOfBirth:
-                  pain001.CstmrCdtTrfInitn.PmtInf.Dbtr.Id.PrvtId.DtAndPlcOfBirth
-                    .CityOfBirth,
+                BirthDt: pain001.CstmrCdtTrfInitn.PmtInf.Dbtr.Id.PrvtId.DtAndPlcOfBirth.BirthDt,
+                CityOfBirth: pain001.CstmrCdtTrfInitn.PmtInf.Dbtr.Id.PrvtId.DtAndPlcOfBirth.CityOfBirth,
               },
               Othr: {
                 Id: pain001.CstmrCdtTrfInitn.PmtInf.Dbtr.Id.PrvtId.Othr.Id,
                 SchmeNm: {
-                  Prtry:
-                    pain001.CstmrCdtTrfInitn.PmtInf.Dbtr.Id.PrvtId.Othr.SchmeNm
-                      .Prtry,
+                  Prtry: pain001.CstmrCdtTrfInitn.PmtInf.Dbtr.Id.PrvtId.Othr.SchmeNm.Prtry,
                 },
               },
             },
@@ -333,9 +302,7 @@ const eventToPain013 = (
             Othr: {
               Id: pain001.CstmrCdtTrfInitn.PmtInf.DbtrAcct.Id.Othr.Id,
               SchmeNm: {
-                Prtry:
-                  pain001.CstmrCdtTrfInitn.PmtInf.DbtrAcct.Id.Othr.SchmeNm
-                    .Prtry,
+                Prtry: pain001.CstmrCdtTrfInitn.PmtInf.DbtrAcct.Id.Othr.SchmeNm.Prtry,
               },
             },
           },
@@ -344,22 +311,17 @@ const eventToPain013 = (
         DbtrAgt: {
           FinInstnId: {
             ClrSysMmbId: {
-              MmbId:
-                pain001.CstmrCdtTrfInitn.PmtInf.DbtrAgt.FinInstnId.ClrSysMmbId
-                  .MmbId,
+              MmbId: pain001.CstmrCdtTrfInitn.PmtInf.DbtrAgt.FinInstnId.ClrSysMmbId.MmbId,
             },
           },
         },
         CdtTrfTxInf: {
           PmtId: {
-            EndToEndId:
-              pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.PmtId.EndToEndId,
+            EndToEndId: pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.PmtId.EndToEndId,
           },
           PmtTpInf: {
             CtgyPurp: {
-              Prtry:
-                pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.PmtTpInf.CtgyPurp
-                  .Prtry,
+              Prtry: pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.PmtTpInf.CtgyPurp.Prtry,
             },
           },
           Amt: {
@@ -374,18 +336,14 @@ const eventToPain013 = (
                 Amt: data.transferAmount.amount,
                 Ccy: data.transferAmount.currency,
               },
-              CcyOfTrf:
-                pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.Amt.EqvtAmt
-                  .CcyOfTrf,
+              CcyOfTrf: pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.Amt.EqvtAmt.CcyOfTrf,
             },
           },
           ChrgBr: 'DEBT',
           CdtrAgt: {
             FinInstnId: {
               ClrSysMmbId: {
-                MmbId:
-                  pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.CdtrAgt.FinInstnId
-                    .ClrSysMmbId.MmbId,
+                MmbId: pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.CdtrAgt.FinInstnId.ClrSysMmbId.MmbId,
               },
             },
           },
@@ -394,38 +352,27 @@ const eventToPain013 = (
             Id: {
               PrvtId: {
                 DtAndPlcOfBirth: {
-                  BirthDt:
-                    pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.Cdtr.Id.PrvtId
-                      .DtAndPlcOfBirth.BirthDt,
-                  CityOfBirth:
-                    pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.Cdtr.Id.PrvtId
-                      .DtAndPlcOfBirth.CityOfBirth,
+                  BirthDt: pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.Cdtr.Id.PrvtId.DtAndPlcOfBirth.BirthDt,
+                  CityOfBirth: pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.Cdtr.Id.PrvtId.DtAndPlcOfBirth.CityOfBirth,
                 },
                 Othr: {
-                  Id: pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.Cdtr.Id.PrvtId
-                    .Othr.Id,
+                  Id: pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.Cdtr.Id.PrvtId.Othr.Id,
                   SchmeNm: {
-                    Prtry:
-                      pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.Cdtr.Id.PrvtId
-                        .Othr.SchmeNm.Prtry,
+                    Prtry: pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.Cdtr.Id.PrvtId.Othr.SchmeNm.Prtry,
                   },
                 },
               },
             },
             CtctDtls: {
-              MobNb:
-                pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.Cdtr.CtctDtls.MobNb,
+              MobNb: pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.Cdtr.CtctDtls.MobNb,
             },
           },
           CdtrAcct: {
             Id: {
               Othr: {
-                Id: pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.CdtrAcct.Id.Othr
-                  .Id,
+                Id: pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.CdtrAcct.Id.Othr.Id,
                 SchmeNm: {
-                  Prtry:
-                    pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.CdtrAcct.Id.Othr
-                      .SchmeNm.Prtry,
+                  Prtry: pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.CdtrAcct.Id.Othr.SchmeNm.Prtry,
                 },
               },
             },
@@ -437,8 +384,7 @@ const eventToPain013 = (
           RgltryRptg: {
             Dtls: {
               Tp: 'BALANCE OF PAYMENTS',
-              Cd: pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.RgltryRptg.Dtls
-                .Cd,
+              Cd: pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.RgltryRptg.Dtls.Cd,
             },
           },
           SplmtryData: {
@@ -472,10 +418,8 @@ const eventToPain013 = (
           Doc: {
             InitgPty: {
               Glctn: {
-                Lat: pain001.CstmrCdtTrfInitn.SplmtryData.Envlp.Doc.InitgPty
-                  .Glctn.Lat,
-                Long: pain001.CstmrCdtTrfInitn.SplmtryData.Envlp.Doc.InitgPty
-                  .Glctn.Long,
+                Lat: pain001.CstmrCdtTrfInitn.SplmtryData.Envlp.Doc.InitgPty.Glctn.Lat,
+                Long: pain001.CstmrCdtTrfInitn.SplmtryData.Envlp.Doc.InitgPty.Glctn.Long,
               },
             },
           },
@@ -535,20 +479,14 @@ const eventToPacs008 = (data: any, pain001: Pain001): Pacs008 => {
           Id: {
             PrvtId: {
               DtAndPlcOfBirth: {
-                BirthDt:
-                  pain001.CstmrCdtTrfInitn.GrpHdr.InitgPty.Id.PrvtId
-                    .DtAndPlcOfBirth.BirthDt,
-                CityOfBirth:
-                  pain001.CstmrCdtTrfInitn.GrpHdr.InitgPty.Id.PrvtId
-                    .DtAndPlcOfBirth.CityOfBirth,
+                BirthDt: pain001.CstmrCdtTrfInitn.GrpHdr.InitgPty.Id.PrvtId.DtAndPlcOfBirth.BirthDt,
+                CityOfBirth: pain001.CstmrCdtTrfInitn.GrpHdr.InitgPty.Id.PrvtId.DtAndPlcOfBirth.CityOfBirth,
                 CtryOfBirth: 'ZZ',
               },
               Othr: {
                 Id: pain001.CstmrCdtTrfInitn.GrpHdr.InitgPty.Id.PrvtId.Othr.Id,
                 SchmeNm: {
-                  Prtry:
-                    pain001.CstmrCdtTrfInitn.GrpHdr.InitgPty.Id.PrvtId.Othr
-                      .SchmeNm.Prtry,
+                  Prtry: pain001.CstmrCdtTrfInitn.GrpHdr.InitgPty.Id.PrvtId.Othr.SchmeNm.Prtry,
                 },
               },
             },
@@ -562,28 +500,20 @@ const eventToPacs008 = (data: any, pain001: Pain001): Pacs008 => {
           Id: {
             PrvtId: {
               DtAndPlcOfBirth: {
-                BirthDt:
-                  pain001.CstmrCdtTrfInitn.PmtInf.Dbtr.Id.PrvtId.DtAndPlcOfBirth
-                    .BirthDt,
-                CityOfBirth:
-                  pain001.CstmrCdtTrfInitn.PmtInf.Dbtr.Id.PrvtId.DtAndPlcOfBirth
-                    .CityOfBirth,
+                BirthDt: pain001.CstmrCdtTrfInitn.PmtInf.Dbtr.Id.PrvtId.DtAndPlcOfBirth.BirthDt,
+                CityOfBirth: pain001.CstmrCdtTrfInitn.PmtInf.Dbtr.Id.PrvtId.DtAndPlcOfBirth.CityOfBirth,
                 CtryOfBirth: 'ZZ',
               },
               Othr: {
                 Id: pain001.CstmrCdtTrfInitn.PmtInf.Dbtr.Id.PrvtId.Othr.Id,
                 SchmeNm: {
-                  Prtry:
-                    pain001.CstmrCdtTrfInitn.PmtInf.Dbtr.Id.PrvtId.Othr.SchmeNm
-                      .Prtry,
+                  Prtry: pain001.CstmrCdtTrfInitn.PmtInf.Dbtr.Id.PrvtId.Othr.SchmeNm.Prtry,
                 },
               },
             },
           },
           CtctDtls: {
-            MobNb: toMobileNumber(
-              pain001.CstmrCdtTrfInitn.PmtInf.Dbtr.CtctDtls.MobNb,
-            ),
+            MobNb: toMobileNumber(pain001.CstmrCdtTrfInitn.PmtInf.Dbtr.CtctDtls.MobNb),
           },
         },
         DbtrAcct: {
@@ -591,9 +521,7 @@ const eventToPacs008 = (data: any, pain001: Pain001): Pacs008 => {
             Othr: {
               Id: pain001.CstmrCdtTrfInitn.PmtInf.DbtrAcct.Id.Othr.Id,
               SchmeNm: {
-                Prtry:
-                  pain001.CstmrCdtTrfInitn.PmtInf.DbtrAcct.Id.Othr.SchmeNm
-                    .Prtry,
+                Prtry: pain001.CstmrCdtTrfInitn.PmtInf.DbtrAcct.Id.Othr.SchmeNm.Prtry,
               },
             },
           },
@@ -618,40 +546,28 @@ const eventToPacs008 = (data: any, pain001: Pain001): Pacs008 => {
           Id: {
             PrvtId: {
               DtAndPlcOfBirth: {
-                BirthDt:
-                  pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.Cdtr.Id.PrvtId
-                    .DtAndPlcOfBirth.BirthDt,
-                CityOfBirth:
-                  pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.Cdtr.Id.PrvtId
-                    .DtAndPlcOfBirth.CityOfBirth,
+                BirthDt: pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.Cdtr.Id.PrvtId.DtAndPlcOfBirth.BirthDt,
+                CityOfBirth: pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.Cdtr.Id.PrvtId.DtAndPlcOfBirth.CityOfBirth,
                 CtryOfBirth: 'ZZ',
               },
               Othr: {
-                Id: pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.Cdtr.Id.PrvtId
-                  .Othr.Id,
+                Id: pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.Cdtr.Id.PrvtId.Othr.Id,
                 SchmeNm: {
-                  Prtry:
-                    pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.Cdtr.Id.PrvtId
-                      .Othr.SchmeNm.Prtry,
+                  Prtry: pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.Cdtr.Id.PrvtId.Othr.SchmeNm.Prtry,
                 },
               },
             },
           },
           CtctDtls: {
-            MobNb: toMobileNumber(
-              pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.Cdtr.CtctDtls.MobNb,
-            ),
+            MobNb: toMobileNumber(pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.Cdtr.CtctDtls.MobNb),
           },
         },
         CdtrAcct: {
           Id: {
             Othr: {
-              Id: pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.CdtrAcct.Id.Othr
-                .Id,
+              Id: pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.CdtrAcct.Id.Othr.Id,
               SchmeNm: {
-                Prtry:
-                  pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.CdtrAcct.Id.Othr
-                    .SchmeNm.Prtry,
+                Prtry: pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.CdtrAcct.Id.Othr.SchmeNm.Prtry,
               },
             },
           },
@@ -681,11 +597,7 @@ const eventToPacs008 = (data: any, pain001: Pain001): Pacs008 => {
   };
 };
 
-const eventToPacs002 = (
-  data: any,
-  pain001: Pain001,
-  transactionId: string,
-): Pacs002 => {
+const eventToPacs002 = (data: any, pain001: Pain001, transactionId: string): Pacs002 => {
   const dateNow = new Date().toISOString();
 
   let TxSts = '';
@@ -707,24 +619,20 @@ const eventToPacs002 = (
       TxInfAndSts: {
         OrgnlInstrId: pain001.CstmrCdtTrfInitn.PmtInf.PmtInfId,
         OrgnlEndToEndId: transactionId.replace('-', ''),
-        TxSts: TxSts,
+        TxSts,
         ChrgsInf: [],
         AccptncDtTm: data.completedTimestamp,
         InstgAgt: {
           FinInstnId: {
             ClrSysMmbId: {
-              MmbId:
-                pain001.CstmrCdtTrfInitn.PmtInf.DbtrAgt.FinInstnId.ClrSysMmbId
-                  .MmbId,
+              MmbId: pain001.CstmrCdtTrfInitn.PmtInf.DbtrAgt.FinInstnId.ClrSysMmbId.MmbId,
             },
           },
         },
         InstdAgt: {
           FinInstnId: {
             ClrSysMmbId: {
-              MmbId:
-                pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.CdtrAgt.FinInstnId
-                  .ClrSysMmbId.MmbId,
+              MmbId: pain001.CstmrCdtTrfInitn.PmtInf.CdtTrfTxInf.CdtrAgt.FinInstnId.ClrSysMmbId.MmbId,
             },
           },
         },

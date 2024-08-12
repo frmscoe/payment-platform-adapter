@@ -1,34 +1,15 @@
-interface DtAndPlcOfBirth {
-  BirthDt: string;
-  CityOfBirth: string;
+// SPDX-License-Identifier: Apache-2.0
+
+export interface Pain013 {
+  TxTp: string;
+  CdtrPmtActvtnReq: CdtrPmtActvtnReq;
+  _key?: string;
 }
 
-interface SchmeNm {
-  Prtry: string;
-}
-
-interface Othr {
-  Id: string;
-  SchmeNm: SchmeNm;
-}
-
-interface PrvtId {
-  DtAndPlcOfBirth: DtAndPlcOfBirth;
-  Othr: Othr;
-}
-
-interface Id {
-  PrvtId: PrvtId;
-}
-
-interface CtctDtls {
-  MobNb: string;
-}
-
-interface InitgPty {
-  Nm: string;
-  Id: Id;
-  CtctDtls: CtctDtls;
+interface CdtrPmtActvtnReq {
+  GrpHdr: GrpHdr;
+  PmtInf: PmtInf;
+  SplmtryData: CdtrPmtActvtnReqSplmtryData;
 }
 
 interface GrpHdr {
@@ -38,191 +19,115 @@ interface GrpHdr {
   InitgPty: InitgPty;
 }
 
-interface DbtAdvc {
-  Cd: string;
-  Prtry: string;
+interface InitgPty {
+  Nm: string;
+  Id: InitgPtyID;
+  CtctDtls: CtctDtls;
 }
 
-interface ReqdAdvcTp {
-  DbtAdvc: DbtAdvc;
-}
-
-interface ReqdExctnDt {
-  DtTm: string;
-}
-
-interface XpryDt {
-  DtTm: string;
-}
-
-interface DtAndPlcOfBirth2 {
-  BirthDt: string;
-  CityOfBirth: string;
-}
-
-interface SchmeNm2 {
-  Prtry: string;
-}
-
-interface Othr2 {
-  Id: string;
-  SchmeNm: SchmeNm2;
-}
-
-interface PrvtId2 {
-  DtAndPlcOfBirth: DtAndPlcOfBirth2;
-  Othr: Othr2;
-}
-
-interface Id2 {
-  PrvtId: PrvtId2;
-}
-
-interface CtctDtls2 {
+interface CtctDtls {
   MobNb: string;
 }
 
-interface Dbtr {
-  Nm: string;
-  Id: Id2;
-  CtctDtls: CtctDtls2;
+interface InitgPtyID {
+  PrvtId: PrvtID;
 }
 
-interface SchmeNm3 {
-  Prtry: string;
+interface PrvtID {
+  DtAndPlcOfBirth: DtAndPLCOfBirth;
+  Othr: PrvtIDOthr[];
 }
 
-interface Othr3 {
+interface DtAndPLCOfBirth {
+  BirthDt: Date;
+  CityOfBirth: string;
+  CtryOfBirth: string;
+}
+
+interface PrvtIDOthr {
   Id: string;
-  SchmeNm: SchmeNm3;
-}
-
-interface Id3 {
-  Othr: Othr3;
-}
-
-interface DbtrAcct {
-  Id: Id3;
-  Nm: string;
-}
-
-interface ClrSysMmbId {
-  MmbId: string;
-}
-
-interface FinInstnId {
-  ClrSysMmbId: ClrSysMmbId;
-}
-
-interface DbtrAgt {
-  FinInstnId: FinInstnId;
-}
-
-interface PmtId {
-  EndToEndId: string;
+  SchmeNm: CtgyPurp;
 }
 
 interface CtgyPurp {
   Prtry: string;
 }
 
-interface PmtTpInf {
-  CtgyPurp: CtgyPurp;
+interface PmtInf {
+  PmtInfId: string;
+  PmtMtd: string;
+  ReqdAdvcTp: ReqdAdvcTp;
+  ReqdExctnDt: Dt;
+  XpryDt: Dt;
+  Dbtr: InitgPty;
+  DbtrAcct: DbtrAcct;
+  DbtrAgt: TrAgt;
+  CdtTrfTxInf: CdtTrfTxInf;
 }
 
-interface Amt2 {
-  Amt: number;
-  Ccy: string;
+interface CdtTrfTxInf {
+  PmtId: PmtID;
+  PmtTpInf: PmtTpInf;
+  Amt: CdtTrfTxInfAmt;
+  ChrgBr: string;
+  CdtrAgt: TrAgt;
+  Cdtr: InitgPty;
+  CdtrAcct: CdtrAcct;
+  Purp: Purp;
+  RgltryRptg: RgltryRptg;
+  RmtInf: RmtInf;
+  SplmtryData: CdtTrfTxInfSplmtryData;
 }
 
-interface InstdAmt {
-  Amt: Amt2;
-}
-
-interface Amt3 {
-  Amt: number;
-  Ccy: string;
-}
-
-interface EqvtAmt {
-  Amt: Amt3;
-  CcyOfTrf: string;
-}
-
-interface Amt {
+interface CdtTrfTxInfAmt {
   InstdAmt: InstdAmt;
   EqvtAmt: EqvtAmt;
 }
 
-interface ClrSysMmbId2 {
-  MmbId: string;
+interface EqvtAmt {
+  Amt: EqvtAmtAmt;
+  CcyOfTrf: string;
 }
 
-interface FinInstnId2 {
-  ClrSysMmbId: ClrSysMmbId2;
+interface EqvtAmtAmt {
+  Amt: string;
+  Ccy: string;
 }
 
-interface CdtrAgt {
-  FinInstnId: FinInstnId2;
-}
-
-interface DtAndPlcOfBirth3 {
-  BirthDt: string;
-  CityOfBirth: string;
-}
-
-interface SchmeNm4 {
-  Prtry: string;
-}
-
-interface Othr4 {
-  Id: string;
-  SchmeNm: SchmeNm4;
-}
-
-interface PrvtId3 {
-  DtAndPlcOfBirth: DtAndPlcOfBirth3;
-  Othr: Othr4;
-}
-
-interface Id4 {
-  PrvtId: PrvtId3;
-}
-
-interface CtctDtls3 {
-  MobNb: string;
-}
-
-interface Cdtr {
-  Nm: string;
-  Id: Id4;
-  CtctDtls: CtctDtls3;
-}
-
-interface SchmeNm5 {
-  Prtry: string;
-}
-
-interface Othr5 {
-  Id: string;
-  SchmeNm: SchmeNm5;
-}
-
-interface Id5 {
-  Othr: Othr5;
+interface InstdAmt {
+  Amt: EqvtAmtAmt;
 }
 
 interface CdtrAcct {
-  Id: Id5;
+  Id: CdtrAcctID;
   Nm: string;
 }
 
-interface Purp {
-  Cd: string;
+interface CdtrAcctID {
+  Othr: PrvtIDOthr[];
 }
 
-interface Dtls {
-  Tp: string;
+interface TrAgt {
+  FinInstnId: FinInstnID;
+}
+
+interface FinInstnID {
+  ClrSysMmbId: CLRSysMmbID;
+}
+
+interface CLRSysMmbID {
+  MmbId: string;
+}
+
+interface PmtID {
+  EndToEndId: string;
+}
+
+interface PmtTpInf {
+  CtgyPurp: CtgyPurp;
+}
+
+interface Purp {
   Cd: string;
 }
 
@@ -230,100 +135,73 @@ interface RgltryRptg {
   Dtls: Dtls;
 }
 
-interface Amt4 {
-  Amt: number;
-  Ccy: string;
+interface Dtls {
+  Tp: string;
+  Cd: string;
 }
 
-interface PyeeRcvAmt {
-  Amt: Amt4;
+interface RmtInf {
+  Ustrd: string;
 }
 
-interface Amt5 {
-  Amt: number;
-  Ccy: string;
+interface CdtTrfTxInfSplmtryData {
+  Envlp: PurpleEnvlp;
 }
 
-interface PyeeFinSvcsPrvdrFee {
-  Amt: Amt5;
+interface PurpleEnvlp {
+  Doc: PurpleDoc;
 }
 
-interface Amt6 {
-  Amt: number;
-  Ccy: string;
+interface PurpleDoc {
+  PyeeRcvAmt: InstdAmt;
+  PyeeFinSvcsPrvdrFee: InstdAmt;
+  PyeeFinSvcsPrvdrComssn: InstdAmt;
 }
 
-interface PyeeFinSvcsPrvdrComssn {
-  Amt: Amt6;
+interface DbtrAcct {
+  Id: DbtrAcctID;
 }
 
-interface Doc {
-  PyeeRcvAmt: PyeeRcvAmt;
-  PyeeFinSvcsPrvdrFee: PyeeFinSvcsPrvdrFee;
-  PyeeFinSvcsPrvdrComssn: PyeeFinSvcsPrvdrComssn;
+interface DbtrAcctID {
+  Othr: PurpleOthr[];
 }
 
-interface Envlp {
-  Doc: Doc;
+interface PurpleOthr {
+  Id: string;
+  SchmeNm: CtgyPurp;
+  Nm: string;
 }
 
-interface SplmtryData {
-  Envlp: Envlp;
+interface ReqdAdvcTp {
+  DbtAdvc: DbtAdvc;
 }
 
-interface CdtTrfTxInf {
-  PmtId: PmtId;
-  PmtTpInf: PmtTpInf;
-  Amt: Amt;
-  ChrgBr: string;
-  CdtrAgt: CdtrAgt;
-  Cdtr: Cdtr;
-  CdtrAcct: CdtrAcct;
-  Purp: Purp;
-  RgltryRptg: RgltryRptg;
-  SplmtryData: SplmtryData;
+interface DbtAdvc {
+  Cd: string;
+  Prtry: string;
 }
 
-interface PmtInf {
-  PmtInfId: string;
-  PmtMtd: string;
-  ReqdAdvcTp: ReqdAdvcTp;
-  ReqdExctnDt: ReqdExctnDt;
-  XpryDt: XpryDt;
-  Dbtr: Dbtr;
-  DbtrAcct: DbtrAcct;
-  DbtrAgt: DbtrAgt;
-  CdtTrfTxInf: CdtTrfTxInf;
+interface Dt {
+  DtTm: Date;
+}
+
+interface CdtrPmtActvtnReqSplmtryData {
+  Envlp: FluffyEnvlp;
+}
+
+interface FluffyEnvlp {
+  Doc: FluffyDoc;
+}
+
+interface FluffyDoc {
+  InitgPty: DocInitgPty;
+}
+
+interface DocInitgPty {
+  Glctn: Glctn;
 }
 
 interface Glctn {
   Lat: string;
   Long: string;
-}
-
-interface InitgPty2 {
-  Glctn: Glctn;
-}
-
-interface Doc2 {
-  InitgPty: InitgPty2;
-}
-
-interface Envlp2 {
-  Doc: Doc2;
-}
-
-interface SplmtryData2 {
-  Envlp: Envlp2;
-}
-
-interface CdtrPmtActvtnReq {
-  GrpHdr: GrpHdr;
-  PmtInf: PmtInf;
-  SplmtryData: SplmtryData2;
-}
-
-export interface Pain013 {
-  TxTp: string;
-  CdtrPmtActvtnReq: CdtrPmtActvtnReq;
 }

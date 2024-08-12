@@ -1,116 +1,66 @@
+// SPDX-License-Identifier: Apache-2.0
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from 'axios';
-import { Context } from 'koa';
+import { type Context } from 'koa';
 import { configuration } from '../config';
 import { LoggerService } from '../helpers';
-import { Pain001 } from '../interfaces/kafka/iPain001Quote';
-import { Pain013 } from '../interfaces/kafka/iPain013Quote';
-import { Pacs002 } from '../interfaces/kafka/iPacs002Transfer';
-import { Pacs008 } from '../interfaces/kafka/iPacs008Transfer';
+import { type Pain001 } from '../interfaces/kafka/iPain001Quote';
+import { type Pain013 } from '../interfaces/kafka/iPain013Quote';
+import { type Pacs002 } from '../interfaces/kafka/iPacs002Transfer';
+import { type Pacs008 } from '../interfaces/kafka/iPacs008Transfer';
 
 const sendPacs002 = async (payload: Pacs002): Promise<any> => {
   try {
+    LoggerService.log(`Sending body\n${JSON.stringify(payload, null, 2)}\n to endpoint\n${configuration.tmsPacs002Endpoint}`);
+    const tmsReply = await axios.post(configuration.tmsPacs002Endpoint, payload);
     LoggerService.log(
-      `Sending body\n${JSON.stringify(payload, null, 2)}\n to endpoint\n${
-        configuration.tmsPacs002Endpoint
-      }`,
-    );
-    const tmsReply = await axios.post(
-      configuration.tmsPacs002Endpoint,
-      payload,
-    );
-    LoggerService.log(
-      `pacs002 response from TMS Api: ${JSON.stringify(
-        tmsReply.data?.message ? tmsReply.data.message : tmsReply.data,
-        null,
-        2,
-      )}`,
+      `pacs002 response from TMS Api: ${JSON.stringify(tmsReply.data?.message ? tmsReply.data.message : tmsReply.data, null, 2)}`,
     );
     return tmsReply;
   } catch (err: any) {
-    LoggerService.error(
-      `sending pacs002 error occured; event: 'error'; Error: ${err}`,
-    );
+    LoggerService.error(`sending pacs002 error occured; event: 'error'; Error: ${err}`);
     return err;
   }
 };
 const sendPacs008 = async (payload: Pacs008): Promise<any> => {
   try {
+    LoggerService.log(`Sending body\n${JSON.stringify(payload, null, 2)}\n to endpoint\n${configuration.tmsPacs008Endpoint}`);
+    const tmsReply = await axios.post(configuration.tmsPacs008Endpoint, payload);
     LoggerService.log(
-      `Sending body\n${JSON.stringify(payload, null, 2)}\n to endpoint\n${
-        configuration.tmsPacs008Endpoint
-      }`,
-    );
-    const tmsReply = await axios.post(
-      configuration.tmsPacs008Endpoint,
-      payload,
-    );
-    LoggerService.log(
-      `pacs008 response from TMS Api: ${
-        tmsReply.data?.message
-          ? tmsReply.data.message
-          : JSON.stringify(tmsReply.data, null, 2)
-      }`,
+      `pacs008 response from TMS Api: ${tmsReply.data?.message ? tmsReply.data.message : JSON.stringify(tmsReply.data, null, 2)}`,
     );
     return tmsReply;
   } catch (err: any) {
-    LoggerService.error(
-      `sending pacs008 error occured; event: 'error'; Error: ${err}`,
-    );
+    LoggerService.error(`sending pacs008 error occured; event: 'error'; Error: ${err}`);
     return err;
   }
 };
 
 const sendPain001 = async (payload: Pain001): Promise<any> => {
   try {
+    LoggerService.log(`Sending body\n${JSON.stringify(payload, null, 2)}\n to endpoint\n${configuration.tmsPain001Endpoint}`);
+    const tmsReply = await axios.post(configuration.tmsPain001Endpoint, payload);
     LoggerService.log(
-      `Sending body\n${JSON.stringify(payload, null, 2)}\n to endpoint\n${
-        configuration.tmsPain001Endpoint
-      }`,
-    );
-    const tmsReply = await axios.post(
-      configuration.tmsPain001Endpoint,
-      payload,
-    );
-    LoggerService.log(
-      `pain001 response from TMS Api: ${
-        tmsReply.data?.message
-          ? tmsReply.data.message
-          : JSON.stringify(tmsReply.data, null, 2)
-      }`,
+      `pain001 response from TMS Api: ${tmsReply.data?.message ? tmsReply.data.message : JSON.stringify(tmsReply.data, null, 2)}`,
     );
     return tmsReply;
   } catch (err: any) {
-    LoggerService.error(
-      `sending pain001 error occured; event: 'error'; Error: ${err}`,
-    );
+    LoggerService.error(`sending pain001 error occured; event: 'error'; Error: ${err}`);
     return err;
   }
 };
 
 const sendPain013 = async (payload: Pain013): Promise<any> => {
   try {
+    LoggerService.log(`Sending body\n${JSON.stringify(payload, null, 2)}\n to endpoint\n${configuration.tmsPain013Endpoint}`);
+    const tmsReply = await axios.post(configuration.tmsPain013Endpoint, payload);
     LoggerService.log(
-      `Sending body\n${JSON.stringify(payload, null, 2)}\n to endpoint\n${
-        configuration.tmsPain013Endpoint
-      }`,
-    );
-    const tmsReply = await axios.post(
-      configuration.tmsPain013Endpoint,
-      payload,
-    );
-    LoggerService.log(
-      `pain013 response from TMS Api: ${
-        tmsReply.data?.message
-          ? tmsReply.data.message
-          : JSON.stringify(tmsReply.data, null, 2)
-      }`,
+      `pain013 response from TMS Api: ${tmsReply.data?.message ? tmsReply.data.message : JSON.stringify(tmsReply.data, null, 2)}`,
     );
     return tmsReply;
   } catch (err: any) {
-    LoggerService.error(
-      `sending pain013 error occured; event: 'error'; Error: ${err}`,
-    );
+    LoggerService.error(`sending pain013 error occured; event: 'error'; Error: ${err}`);
     return err;
   }
 };

@@ -1,46 +1,9 @@
-interface GrpHdr {
-  MsgId: string;
-  CreDtTm: string;
-}
+// SPDX-License-Identifier: Apache-2.0
 
-interface Amt {
-  Amt: number;
-  Ccy: string;
-}
-
-interface ClrSysMmbId {
-  MmbId: string;
-}
-
-interface FinInstnId {
-  ClrSysMmbId: ClrSysMmbId;
-}
-
-interface Agt {
-  FinInstnId: FinInstnId;
-}
-
-interface ChrgsInf {
-  Amt: Amt;
-  Agt: Agt;
-}
-
-interface InstgAgt {
-  FinInstnId: FinInstnId;
-}
-
-interface InstdAgt {
-  FinInstnId: FinInstnId;
-}
-
-interface TxInfAndSts {
-  OrgnlInstrId: string;
-  OrgnlEndToEndId: string;
-  TxSts: string;
-  ChrgsInf: ChrgsInf[];
-  AccptncDtTm: string;
-  InstgAgt: InstgAgt;
-  InstdAgt: InstdAgt;
+export interface Pacs002 {
+  TxTp: string;
+  FIToFIPmtSts: FIToFIPmtSts;
+  _key?: string;
 }
 
 interface FIToFIPmtSts {
@@ -48,7 +11,39 @@ interface FIToFIPmtSts {
   TxInfAndSts: TxInfAndSts;
 }
 
-export interface Pacs002 {
-  TxTp: string;
-  FIToFIPmtSts: FIToFIPmtSts;
+interface GrpHdr {
+  MsgId: string;
+  CreDtTm: string;
+}
+
+interface TxInfAndSts {
+  OrgnlInstrId: string;
+  OrgnlEndToEndId: string;
+  TxSts: string;
+  ChrgsInf: ChrgsInf[];
+  AccptncDtTm: Date;
+  InstgAgt: Agt;
+  InstdAgt: Agt;
+}
+
+interface ChrgsInf {
+  Amt: Amt;
+  Agt: Agt;
+}
+
+interface Agt {
+  FinInstnId: FinInstnID;
+}
+
+interface FinInstnID {
+  ClrSysMmbId: CLRSysMmbID;
+}
+
+interface CLRSysMmbID {
+  MmbId: string;
+}
+
+interface Amt {
+  Amt: number;
+  Ccy: string;
 }
