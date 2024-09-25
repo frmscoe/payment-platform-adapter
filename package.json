@@ -49,7 +49,7 @@
     "koa-bodyparser": "^4.4.1",
     "koa-router": "^12.0.1",
     "log4js": "^6.9.1",
-    "swagger2": "^3.0.0",
+    "swagger2": "^4.0.3",
     "swagger2-koa": "^3.0.0",
     "tslib": "^2.6.3",
     "uuid": "^9.0.1"
