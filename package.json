@@ -41,7 +41,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@types/uuid": "^9.0.8",
-    "axios": "^1.7.2",
+    "axios": "^1.7.9",
     "dotenv": "16.4.5",
     "ioredis": "^5.4.1",
     "kafkajs": "^2.2.4",
