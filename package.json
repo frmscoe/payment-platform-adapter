@@ -52,7 +52,7 @@
     "swagger2": "^3.0.0",
     "swagger2-koa": "^3.0.0",
     "tslib": "^2.6.3",
-    "uuid": "^9.0.1"
+    "uuid": "^14.0.0"
   },
   "devDependencies": {
     "@stylistic/eslint-plugin": "^2.1.0",
